@@ -1,18 +1,35 @@
 import 'package:flutter/material.dart';
+import 'Dictionary.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
+
     return MyAppState();
   }
 }
 
 class MyAppState extends State<MyApp> {
   final TextEditingController _controller = new TextEditingController();
+  //final myController = TextEditingController();
   String result = "";
+  double resultSize;
+
+  void haveTheAnswer(String input) {
+    setState(() {
+      if (input == " " || input == null || input == "") {
+        result = " you did not enter any word";
+      } else {
+
+        result = input;
+      }
+
+      resultSize = result.length.toDouble();
+    });
+    _controller.text = "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,23 +43,36 @@ class MyAppState extends State<MyApp> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                hintText: ('enter your work'),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                color: Colors.orange,
               ),
-              onSubmitted: (String str) {
-                setState(() {
-                  if(str==" " || str== null || str=="" )
-                  {
-                    result=" you did not enter any word";
-                  }else {result = str;}
-
-                });
-                _controller.text = "";
-              },
-              controller: _controller,
+              padding: EdgeInsets.all(8.0),
+              width: 600.0,
+              margin: const EdgeInsets.fromLTRB(20, 2, 20, 10),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: ('enter your word'),
+                ),
+                onSubmitted: haveTheAnswer,
+                controller: _controller,
+              ),
             ),
-            Text(result),
+
+            // result of the word
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(5.5)),
+
+              //it should be with the length of the word
+              margin: const EdgeInsets.fromLTRB(50, 2, 50, 2),
+              padding: EdgeInsets.all(5),
+              child: Center(
+                child: Text(result),
+              ),
+            ),
           ],
         ),
       )),
