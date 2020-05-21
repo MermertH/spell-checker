@@ -18,6 +18,7 @@ class MyspellChecker extends State<firstpage>
   double resultSize;
 
   void haveTheAnswer(String input) {
+    String check;
     setState(() {
       if (input == " " || input == null || input == "") {
         result = " you did not enter any word";
